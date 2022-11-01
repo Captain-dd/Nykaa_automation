@@ -1,6 +1,6 @@
 import time
 from utilities.common_utilities import CommonUtilities
-import locators.SearchPage as spl
+import locators.SearchPageLocators as spl
 import locators.ProductPageLocators as ppl
 from conftest import driver
 
@@ -31,29 +31,26 @@ class ProductPageUtilities(CommonUtilities):
     #     else:
     #         return False
 
-    def click_add_to_bag_button(self):
-        self.click_element(ppl.add_to_bag)
-
-    def click_cart_button(self):
-        self.click_element(ppl.cart_button)
-
-    def click_proceed_to_buy(self):
-        self.click_element(ppl.product_to_buy_button)
-
-    def click_add_to_wishlist_button(self):
-        self.click_element(ppl.wishlist_button)
-
-    def click_a_product(self):
-        self.click_element(spl.name_of_product)
+    # def click_add_to_bag_button(self):
+    #     self.click_element(ppl.add_to_bag)
+    #
+    # def click_cart_button(self):
+    #     self.click_element(ppl.cart_button)
+    #
+    # def click_proceed_to_buy(self):
+    #     self.click_element(ppl.product_to_buy_button)
+    #
+    # def click_add_to_wishlist_button(self):
+    #     self.click_element(ppl.add_to_wishlist)
+    #
+    # def click_a_product(self):
+    #     self.click_element(spl.name_of_product)
 
     def switch_to_product_window(self):
         tabs = driver.window_handles
 
         driver.switch_to.window(tabs[1])
 
-    def select_size(self):
-        self.click_element(ppl.medium_size_button)
+    # def select_size(self):
+    #     self.click_element(ppl.medium_size_button)
 
-    def switch_to_frame(self):
-
-        driver.switch_to.frame(driver.find_element(by=By.CSS_SELECTOR, value='iframe[title="Nykaa Fashion Cart"]'))

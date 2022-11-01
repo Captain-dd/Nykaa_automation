@@ -1,4 +1,5 @@
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from config.control import explicit_wait_time
 from conftest import driver
@@ -51,3 +52,8 @@ class CommonUtilities:
 
         self.send_text(element_locator=hpl.search_bar, text=product_name)
         self.press_enter_key()
+
+    def switch_to_frame(self, frame_locator):
+
+        driver.switch_to.frame(driver.find_element(by=frame_locator[0], value=frame_locator[1]))
+

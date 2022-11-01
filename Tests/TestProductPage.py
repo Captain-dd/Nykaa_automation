@@ -4,6 +4,9 @@ from utilities.loginPage_utilities import LoginPageUtilities
 from utilities.searchPage_utilities import ProductPageUtilities
 from selenium.webdriver.common.by import By
 import locators.ProductPageLocators as Ppl
+import locators.SearchPageLocators as Spl
+
+from conftest import driver
 
 lpu = LoginPageUtilities()
 ppu = ProductPageUtilities()
@@ -12,29 +15,58 @@ ppu = ProductPageUtilities()
 @pytest.mark.usefixtures('initiate_driver')
 class TestProductPage:
 
-    @pytest.mark.parametrize("product_name", [('Mens Kurta'), ('Mens Tshirt'), ('mens jins')])
-    def test_buy_a_product(self, product_name):
-        ppu.search_product(product_name)
-        ppu.click_a_product()
+    # @pytest.mark.parametrize("product_name", [('Mens Kurta'), ('Mens Tshirt'), ('mens jins')])
+    @pytest.mark.parametrize("product_name, mobile_num", [('Mens Tshirt', 9913300039)])
+    def test_buy_a_product(self, product_name, mobile_num):
+
+        lpu.perform_login(mobile_number=9913300039)
+        time.sleep(2)
+        ppu.search_product(product_name=product_name)
+        ppu.press_enter_key()
+        time.sleep(2)
+        ppu.click_element(element_locator=Spl.name_of_product)
+        time.sleep(2)
         ppu.switch_to_product_window()
-        ppu.select_size()
-        ppu.click_add_to_bag_button()
-        ppu.click_cart_button()
-        ppu.click_proceed_to_buy()
+        ppu.click_element(element_locator=Ppl.medium_size_button)
+        ppu.click_element(element_locator=Ppl.add_to_bag)
+        ppu.click_element(element_locator=Ppl.cart_button)
+        ppu.switch_to_frame(frame_locator=Ppl.frame_locator)
+        try:
+            ppu.click_element(element_locator=Ppl.got_it_button_iframe)
+        except:
+            pass
 
-        assert 1 == 5, "proceed to buy button not working"
+        ppu.click_element(element_locator=Ppl.add_to_wishlist)
+        time.sleep(2)
+        ppu.click_element(element_locator=Ppl.back_button_of_iframe)
+        time.sleep(2)
+        ppu.click_element(element_locator=Ppl.wishlist)
 
-    @pytest.mark.parametrize("product_name", [('Mens Kurta'), ('Mens Tshirt'), ('mens jins')])
-    def test_wishlist_a_product(self, product_name):
-        ppu.search_product(product_name)
-        ppu.click_a_product()
-        ppu.switch_to_product_window()
-        ppu.select_size()
-        ppu.click_add_to_bag_button()
-        ppu.click_cart_button()
-        ppu.click_add_to_wishlist_button()
+        tabs = driver.window_handles
+        driver.switch_to.window(tabs[2])
 
-        assert 1 == 5, "wish to list button not working"
+        element_lst = driver.find_elements(by=By.XPATH, value='')
+
+        data = []
+
+        for i in element_lst:
+
+            data.append(i.text)
+
+
+        assert 'Difference of Opinion' in data, "proceed to buy button not working"
+
+    # @pytest.mark.parametrize("product_name", [('Mens Kurta'), ('Mens Tshirt'), ('mens jins')])
+    # def test_wishlist_a_product(self, product_name):
+    #     ppu.search_product(product_name)
+    #     ppu.click_a_product()
+    #     ppu.switch_to_product_window()
+    #     ppu.select_size()
+    #     ppu.click_add_to_bag_button()
+    #     ppu.click_cart_button()
+    #     ppu.click_add_to_wishlist_button()
+
+        # assert 1 == 5, "wish to list button not working"
 
     def test_switch_to_frame(self):
 
