@@ -45,13 +45,15 @@ class TestProductPage:
         tabs = driver.window_handles
         driver.switch_to.window(tabs[2])
 
-        element_lst = driver.find_elements(by=By.XPATH, value='')
+        # element_lst = driver.find_elements(by=By.XPATH, value='')
+        #
+        # data = []
+        #
+        # for i in element_lst:
+        #
+        #     data.append(i.text)
 
-        data = []
-
-        for i in element_lst:
-
-            data.append(i.text)
+        assert driver.current_url
 
 
         assert 'Difference of Opinion' in data, "proceed to buy button not working"
