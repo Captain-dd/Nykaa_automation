@@ -16,7 +16,5 @@ def initiate_driver():
 
     driver.quit()
 
-
-
-
+# comment added by palak
 
